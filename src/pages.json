@@ -1,0 +1,50 @@
+{
+	"pages": [
+		{
+			"path": "pages/home/index",
+			"style": {
+				"fontSize": "14px",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/index/index",
+			"style": {}
+		},
+		{
+			"path": "pages/me/index",
+			"style": {}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "white",
+		"navigationBarTitleText": "墨香待办",
+		"navigationBarBackgroundColor": "#a25158",
+		"backgroundColor": "#a25158",
+		"fontSize": "14px"
+	},
+	"tabBar": {
+		"color": "#7A7E83",
+		"selectedColor": "#3cc51f",
+		"borderStyle": "black",
+		"backgroundColor": "#ffffff",
+		"height": "50px",
+		"fontSize": "16px",
+		"iconWidth": "24px",
+		"spacing": "3px",
+		"list": [
+			{
+				"pagePath": "pages/home/index",
+				"iconPath": "",
+				"selectedIconPath": "",
+				"text": "首页"
+			},
+			{
+				"pagePath": "pages/me/index",
+				"iconPath": "",
+				"selectedIconPath": "",
+				"text": "我的"
+			}
+		]
+	}
+}
