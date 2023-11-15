@@ -21,7 +21,7 @@ export default defineConfig(({ mode }) => {
       allowImportingTsExtensions: true,
     },
     server: {
-      host: 'localhost',
+      host: '0.0.0.0',
       port: 8080,
       cors: true,
       proxy: {

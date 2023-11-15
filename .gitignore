@@ -13,6 +13,7 @@ dist
 dist-ssr
 src/config/secret.ts
 *.local
+.env.development
 
 # Editor directories and files
 .idea
