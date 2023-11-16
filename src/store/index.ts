@@ -1,7 +1,7 @@
 import { ref, computed } from 'vue';
 import { defineStore } from 'pinia';
 export const useCommonStore = defineStore('common-store', () => {
-  const userid = ref(localStorage.getItem('userid'))
-  const token = ref(localStorage.getItem('token'))
-  const userinfo = ref(localStorage.getItem('userinfo'))
+  const userid = ref(uni.getStorageSync('userid'))
+  const token = ref(uni.getStorageSync('token'))
+  const userinfo = ref(uni.getStorageSync('userinfo'))
 })

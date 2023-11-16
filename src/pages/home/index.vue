@@ -79,14 +79,14 @@
 
 <script setup lang="ts">
 import Api from '@/api';
-import { ref, onMounted, computed, shallowRef, watch, reactive } from 'vue';
+import { ref, onMounted, onUnmounted, computed, shallowRef, watch, reactive } from 'vue';
 import { showNotify, showConfirmDialog, showToast } from 'vant';
 import todoItem from './todoItem.vue';
 // @ts-ignore
 import CryptoJS from 'crypto-js';
 import { secretPwKey } from '@/config/secret'; 
 import { levels } from '@/config';
-const token = ref(localStorage.getItem('token'))
+const token = ref(uni.getStorageSync('token'))
 const show = ref(false)
 const username = ref('');
 const password = ref('');
@@ -103,9 +103,9 @@ const onSubmit = async (values: any) => {
     const { data } = await Api.login({ username,  password: encryptedPassword })
     userinfo.value = data
     show.value = false
-    localStorage.setItem('token', data.token)
-    localStorage.setItem('userid', data.id)
-    localStorage.setItem('userinfo', JSON.stringify(data))
+    uni.setStorageSync('token', data.token)
+    uni.setStorageSync('userid', data.id)
+    uni.setStorageSync('userinfo', JSON.stringify(data))
   } catch (error: any) {
     showNotify({ color: '#ad0000', background: '#ffe1e1', type: 'danger', message: error.message });
   }
@@ -114,9 +114,9 @@ const logout = () => {
   show.value = false
   username.value = ''
   password.value = ''
-  localStorage.removeItem('token')
-  localStorage.removeItem('userid')
-  localStorage.removeItem('userinfo')
+  uni.removeStorageSync('token')
+  uni.removeStorageSync('userid')
+  uni.removeStorageSync('userinfo')
   userinfo.value = {}
 }
 
@@ -129,7 +129,7 @@ const pageNum = ref(1)
 const getList = async () => {
   if (!token.value) return loading.value = false
   const params = {
-      userid: localStorage.getItem('userid'),
+      userid: uni.getStorageSync('userid'),
       pageNum: pageNum.value,
       pageSize: 10
     }
@@ -233,8 +233,8 @@ const addTodo = () => {
     commont: ''
   }
 }
-watch(() => userinfo.value?.username, (val) => {
-  if (val) {
+watch(() => show.value, (val) => {
+  if (!val) {
     pageNum.value = 1
     getList()
   } else {
@@ -242,12 +242,25 @@ watch(() => userinfo.value?.username, (val) => {
     total.value = 0
   }
 })
+const setOffset = () => {
+  const clientWidth = document.body.clientWidth
+  const clientHeight = document.body.clientHeight
+  const pixel = window.devicePixelRatio || 2
+  offset.value = {
+    x: clientWidth - (36 * pixel) || 300,
+    y: clientHeight - (87 * pixel) || 500
+  }
+}
 onMounted(() => {
-  let info = localStorage.getItem('userinfo')
+  let info = uni.getStorageSync('userinfo')
   if (info) {
     info = JSON.parse(info)
     userinfo.value = info
   }
+  window.addEventListener('resize', setOffset)
+})
+onUnmounted(() => {
+  window.removeEventListener('resize', setOffset)
 })
 </script>
 

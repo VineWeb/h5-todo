@@ -53,8 +53,8 @@ class Request {
 
       Object.keys(params).forEach(key => params && (typeof params[key] === 'undefined') && delete params[key])
       headers['Access-Control-Allow-Origin'] = '*'
-      if(localStorage.getItem("token")){
-        const token = localStorage.getItem("token")
+      if(uni.getStorageSync("token")){
+        const token = uni.getStorageSync("token")
         headers['Authorization'] = token
       }
       config.headers = headers

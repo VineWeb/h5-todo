@@ -118,7 +118,7 @@ const beforeClose = (action: string) => {
 }
 
 const onSubmit = async (values: any) => {
-  const userid = localStorage.getItem('userid')
+  const userid = uni.getStorageSync('userid')
   if (!userid) return showNotify({ color: '#ad0000', type: 'danger', message: '请先登录!' });
   try {
     const { title, content, comment }  = values
